@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 class Soporte{
-    private static int $IVA = 21;
+    private const IVA = 21;
     public function __construct(
         public string $titulo,
         protected int $numero,
@@ -16,11 +16,12 @@ class Soporte{
         return $this->numero;
     }
     public function getPrecioConIva(){
-        return $this->precio * (1+ self::$IVA / 100);
+        return $this->precio * (1 + self::IVA / 100);
     }
 
     public function muestraResumen(){
-        echo "<br>$this->titulo con el nº$this->numero: $this->precio €";
+        echo "<br>$this->titulo 
+              <br>$this->precio € (IVA no incluido)";
     }
 
 
