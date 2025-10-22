@@ -1,11 +1,13 @@
 <?php
-include_once "Soporte.php";
-class CintaVideo extends Soporte {
+
+class Dvd extends Soporte{
+
     public function __construct(
         string $titulo,
         int $numero,
         float $precio,
-        private int $duracion
+        public string $idiomas,
+        private string $formatPantalla
     )
     {
         parent::__construct($titulo, $numero, $precio);
@@ -13,7 +15,8 @@ class CintaVideo extends Soporte {
 
     public function muestraResumen(){
         parent::muestraResumen();
-        echo "<br>Duración: $this->duracion minutos";
+        echo "<br>Idiomas: " . $this->idiomas;
+        echo "<br>Formato Pantalla: " . $this->formatPantalla;
     }
 
 }
