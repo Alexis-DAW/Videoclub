@@ -1,17 +1,16 @@
 <?php
 include_once "Soporte.php";
 class CintaVideo extends Soporte {
-    public function __construct(
-        string $titulo,
-        int $numero,
-        float $precio,
-        private int $duracion
-    )
+    private int $duracion;
+
+    public function __construct(string $titulo, float $precio, int $duracion)
     {
-        parent::__construct($titulo, $numero, $precio);
+        parent::__construct($titulo, $precio);
+        $this->duracion = $duracion;
     }
 
     public function muestraResumen(){
+        echo "Película en VHS:";
         parent::muestraResumen();
         echo "<br>Duración: $this->duracion minutos";
     }

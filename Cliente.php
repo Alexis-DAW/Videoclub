@@ -1,14 +1,17 @@
 <?php
 class Cliente {
+    private static int $contador = 1;
+
+
     public string $nombre;
     private int $numero;
     private int $maxAlquilerConcurrente;
     private int $numSoportesAlquilados = 0;
     private array $soportesAlquilados = [];
 
-    public function __construct(string $nombre, int $numero, int $maxAlquilerConcurrente=3){
+    public function __construct(string $nombre, int $maxAlquilerConcurrente=3){
         $this->nombre = $nombre;
-        $this->numero = $numero;
+        $this->numero = self::$contador++;
         $this->maxAlquilerConcurrente = $maxAlquilerConcurrente;
     }
 
