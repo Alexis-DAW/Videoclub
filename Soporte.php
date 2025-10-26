@@ -2,7 +2,7 @@
 declare(strict_types=1);
 class Soporte{
     private const IVA = 21;
-    private static int $contador = 1; // 🔹 Contador autoincremental
+    private static int $contador = 1;
 
     protected int $numero;
     private float $precio;
@@ -12,7 +12,7 @@ class Soporte{
     {
         $this->titulo = $titulo;
         $this->precio = $precio;
-        $this->numero = self::$contador++; // 🔹 Asigna y aumenta el número
+        $this->numero = self::$contador++;
     }
     public function getPrecio(): float
     {

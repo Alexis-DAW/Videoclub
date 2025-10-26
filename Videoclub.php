@@ -51,8 +51,10 @@ class Videoclub
         }
     }
     public function listarSocios(): void{
+        echo "<br><br>Listado de " . $this->numSocios . " socios del videoclub:<br>";
         foreach ($this->socios as $socio){
             $socio->muestraResumen();
+            echo "<br>";
         }
     }
 

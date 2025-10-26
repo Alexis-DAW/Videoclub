@@ -50,7 +50,7 @@ class Cliente {
 
         $this->soportesAlquilados[] = $s;
         $this->numSoportesAlquilados++;
-        echo "<br><strong>Alquilado soporte a:</strong> $this->nombre";
+        echo "<p><strong>Alquilado soporte a:</strong> $this->nombre</p>";
         $s->muestraResumen();
         return true;
     }
