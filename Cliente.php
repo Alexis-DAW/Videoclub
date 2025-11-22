@@ -23,20 +23,22 @@ class Cliente {
         $this->maxAlquilerConcurrente = $maxAlquilerConcurrente;
     }
 
-    public function getNumero(): int
-    {
+    public function getNumero(): int{
         return $this->numero;
     }
 
-    public function setNumero(int $numero): void
-    {
+    public function setNumero(int $numero): void{
         $this->numero = $numero;
     }
 
-    public function getNumSoportesAlquilados(): int
-    {
+    public function getNumSoportesAlquilados(): int{
         return $this->numSoportesAlquilados;
     }
+
+    public function getMaxAlquilerConcurrente(): int{
+        return $this->maxAlquilerConcurrente;
+    }
+
 
     public function muestraResumen(): void{
         echo "$this->nombre con " . count($this->soportesAlquilados) . " soportes alquilados";
@@ -56,6 +58,9 @@ class Cliente {
 
         $this->soportesAlquilados[] = $s;
         $this->numSoportesAlquilados++;
+
+        $s->alquilado = true;
+
         echo "<p><strong>Alquilado soporte a:</strong> $this->nombre</p>";
         $s->muestraResumen();
         return $this;

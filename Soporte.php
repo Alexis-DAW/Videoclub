@@ -9,12 +9,14 @@ abstract class Soporte implements Resumible {
     protected int $numero;
     private float $precio;
     public string $titulo;
+    public bool $alquilado;
 
     public function __construct(string $titulo, float $precio)
     {
         $this->titulo = $titulo;
         $this->precio = $precio;
         $this->numero = self::$contador++;
+        $this->alquilado = false;
     }
     public function getPrecio(): float
     {
