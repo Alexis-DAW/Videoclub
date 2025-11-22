@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-class Soporte{
+include_once("Resumible.php");
+abstract class Soporte implements Resumible {
     private const IVA = 21;
     private static int $contador = 1;
 

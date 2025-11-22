@@ -77,6 +77,7 @@ class Videoclub
 
         if ($socio && $soporte){
             $socio->alquilar($soporte);
+            return $this;
         } else {
             echo "ERROR. Socio o soporte no encontrados.";
         }
