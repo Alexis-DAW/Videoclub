@@ -1,4 +1,5 @@
 <?php
+namespace Dwes\ProyectoVideoclub;
 class Cliente {
     private static int $contador = 1;
 

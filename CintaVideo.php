@@ -1,6 +1,9 @@
 <?php
+namespace Dwes\ProyectoVideoclub;
 include_once "Soporte.php";
-class CintaVideo extends Soporte {
+
+class CintaVideo extends Soporte
+{
     private int $duracion;
 
     public function __construct(string $titulo, float $precio, int $duracion)
@@ -9,7 +12,8 @@ class CintaVideo extends Soporte {
         $this->duracion = $duracion;
     }
 
-    public function muestraResumen(){
+    public function muestraResumen()
+    {
         echo "Película en VHS:";
         parent::muestraResumen();
         echo "<br>Duración: $this->duracion minutos";
