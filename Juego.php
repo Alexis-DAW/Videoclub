@@ -1,5 +1,5 @@
 <?php
-namespace Dwes\ProyectoVideoclub;
+namespace DWES\Videoclub;
 class Juego extends Soporte {
 
     public string $consola;

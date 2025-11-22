@@ -1,5 +1,11 @@
 <?php
-namespace Dwes\ProyectoVideoclub;
+namespace DWES\Videoclub;
+
+use DWES\Videoclub\Util\VideoclubException;
+use DWES\Videoclub\Util\ClienteNoEncontradoException;
+use DWES\Videoclub\Util\SoporteNoEncontradoException;
+
+include_once("Util\VideoclubException.php");
 
 include_once("Soporte.php");
 include_once("CintaVideo.php");
@@ -7,8 +13,7 @@ include_once("Dvd.php");
 include_once("Juego.php");
 include_once("Cliente.php");
 
-class Videoclub
-{
+class Videoclub {
     private string $nombre;
     private array $productos;
     private int $numProductos;
@@ -60,30 +65,34 @@ class Videoclub
         }
     }
 
-    public function alquilarSocioProducto($numeroCliente, $numeroSoporte){
-        $socio = null;
-        foreach ($this->socios as $s){
-            if ($s->getNumero() === $numeroCliente){
-                $socio = $s;
-                break;
+    public function alquilarSocioProducto($numeroCliente, $numeroSoporte): Videoclub{
+        try {
+            $socio = null;
+            foreach ($this->socios as $s){
+                if ($s->getNumero() === $numeroCliente){
+                    $socio = $s;
+                    break;
+                }
             }
-        }
 
-        $soporte = null;
-        foreach ($this->productos as $p){
-            if ($p->getNumero() === $numeroSoporte){
-                $soporte = $p;
-                break;
+            $soporte = null;
+            foreach ($this->productos as $p){
+                if ($p->getNumero() === $numeroSoporte){
+                    $soporte = $p;
+                    break;
+                }
             }
-        }
 
-        if ($socio && $soporte){
+            if (!$socio) throw new ClienteNoEncontradoException();
+            if (!$soporte) throw new SoporteNoEncontradoException();
+
             $socio->alquilar($soporte);
             return $this;
-        } else {
-            echo "ERROR. Socio o soporte no encontrados.";
-        }
 
+        }catch(VideoclubException $e){
+            echo "<p style='color:red;'>⛔ ERROR: " . $e->getMessage() . "</p>";
+        }
+        return $this;
     }
 
 }

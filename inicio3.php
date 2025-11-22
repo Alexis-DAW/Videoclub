@@ -1,7 +1,7 @@
 <?php
 include_once "Videoclub.php"; // No incluimos nada más
 
-use Dwes\ProyectoVideoclub\Videoclub;
+use DWES\Videoclub\Videoclub as Videoclub;
 
 $vc = new Videoclub("Severo 8A");
 
@@ -22,7 +22,9 @@ echo "<br><br>";
 $vc->incluirSocio("Amancio Ortega");
 $vc->incluirSocio("Pablo Picasso", 2);
 
-$vc->alquilarSocioProducto(1,2)->alquilarSocioProducto(1,3)->alquilarSocioProducto(1,2)->alquilarSocioProducto(1,6);
+$vc->alquilarSocioProducto(1,2)->alquilarSocioProducto(1,3)
+    ->alquilarSocioProducto(1,2)->alquilarSocioProducto(1,6);
 
 //listo los socios
 $vc->listarSocios();
+

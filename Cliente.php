@@ -1,5 +1,12 @@
 <?php
-namespace Dwes\ProyectoVideoclub;
+namespace DWES\Videoclub;
+include_once("Util\SoporteYaAlquiladoException.php");
+include_once ("Util\CupoSuperadoException.php");
+include_once ("Util\SoporteNoEncontradoException.php");
+
+use DWES\Videoclub\Util\CupoSuperadoException;
+use DWES\Videoclub\Util\SoporteYaAlquiladoException;
+use DWES\Videoclub\Util\SoporteNoEncontradoException;
 class Cliente {
     private static int $contador = 1;
 
@@ -39,24 +46,22 @@ class Cliente {
         return in_array($s, $this->soportesAlquilados);
     }
 
-    public function alquilar(Soporte $s): bool{
+    public function alquilar(Soporte $s): Cliente{
         if ($this->tieneAlquilado($s)) {
-            echo "<br>El soporte ya está alquilado por este cliente.<br>";
-            return false;
+            throw new SoporteYaAlquiladoException("El soporte $s->titulo ya está alquilado por $this->nombre");
         }
         if ($this->numSoportesAlquilados >= $this->maxAlquilerConcurrente) {
-            echo "<br>No se pudo alquilar: se alcanzó el máximo de alquileres concurrentes.";
-            return false;
+            throw new CupoSuperadoException("$this->nombre no puede alquilar más, cupo de $this->maxAlquilerConcurrente superado.");
         }
 
         $this->soportesAlquilados[] = $s;
         $this->numSoportesAlquilados++;
         echo "<p><strong>Alquilado soporte a:</strong> $this->nombre</p>";
         $s->muestraResumen();
-        return true;
+        return $this;
     }
 
-    public function devolver(int $numSoporte): bool {
+    public function devolver(int $numSoporte): Cliente {
         $soporteEncontrado = null;
         foreach ($this->soportesAlquilados as $soporte) {
             if ($soporte->getNumero() === $numSoporte) {
@@ -70,11 +75,11 @@ class Cliente {
 
             $this->numSoportesAlquilados--;
             echo "<br>Soporte número $numSoporte devuelto correctamente.";
-            return true;
+            return $this;
         }
 
-        echo "<br>No se encontró ningún soporte con número $numSoporte alquilado por este cliente.";
-        return false;
+        throw new SoporteNoEncontradoException("No se encontró ningún soporte con número $numSoporte alquilado 
+        por el cliente $this->nombre.");
     }
 
     public function listaAlquileres(): void{
