@@ -40,7 +40,7 @@ $cliente = $_SESSION["clienteActual"];
     }
     ?>
 
-    <a href="index.php">Cerrar sesión</a>
+    <a href="logout.php">Cerrar sesión</a>
 
 </body>
 </html>

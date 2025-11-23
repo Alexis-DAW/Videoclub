@@ -19,11 +19,12 @@ if (!isset($_SESSION["videoclub"]) || !isset($_SESSION["nombreUsuario"])) {
     <h1>¡Bienvenido, <?= $_SESSION["nombreUsuario"] ?? "" ?>! 🎬
         Videoclub <?= $_SESSION["videoclub"]->getNombre() ?></h1>
 
-    <?php $_SESSION["videoclub"]->listarSocios() ?> <br>
+    <?php $_SESSION["videoclub"]->listarSocios() ?>
+    <a href="formCreateCliente.php">➕Añadir nuevo socio</a> <br><br>
 
     <?php $_SESSION["videoclub"]->listarProductos() ?> <br>
 
-    <a href="index.php">Cerrar sesión</a>
+    <a href="logout.php">Cerrar sesión</a>
 
 </body>
 </html>

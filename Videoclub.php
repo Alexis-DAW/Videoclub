@@ -53,7 +53,6 @@ class Videoclub {
     private function incluirProducto(Soporte $producto): void {
         $this->productos[] = $producto;
         $this->numProductos++;
-//        echo "Incluido soporte " . $this->numProductos . "<br>";
     }
     public function incluirCintaVideo($titulo, $precio, $duracion): void {
         $this->incluirProducto(new CintaVideo($titulo, $precio, $duracion));
@@ -65,10 +64,34 @@ class Videoclub {
         $this->incluirProducto(new Juego($titulo, $precio, $consola, $minJ, $maxJ));
     }
 
-    public function incluirSocio(string $nombre, int $maxAlquileresConcurrentes = 3, string $user, string $pass): void {
-        $this->socios[] = new Cliente($nombre, $maxAlquileresConcurrentes, $user, $pass);
+    public function incluirSocio(string $nombre, int $maxAlquilerConcurrente=3, string $user, string $pass, int $numeroCliente = 0): void {
+
+        $socio = new Cliente($nombre, $maxAlquilerConcurrente, $user, $pass, $numeroCliente);
+        $this->socios[] = $socio;
         $this->numSocios++;
-//        echo "Incluido socio " . $this->numSocios . "<br>";
+    }
+
+    public function buscarPorNumSocio(int $numSocio): ?Cliente {
+        foreach ($this->socios as $socio){
+            if($socio->getNumero() === $numSocio){
+                return $socio;
+            }
+        }
+        return null;
+    }
+    public function eliminarSocio(int $numSocio){
+        $socioAEliminar = $this->buscarPorNumSocio($numSocio);
+
+        if (!$socioAEliminar) {
+            throw new ClienteNoEncontradoException("No se encontró socio con el número: $numSocio.");
+        }
+
+        $this->socios = array_filter($this->socios, fn($socio) => $socio->getNumero() !== $numSocio);
+        $this->numSocios--;
+
+        echo "<p style='color:green;'>✅ Socio número $numSocio ({$socioAEliminar->nombre}) eliminado correctamente.</p>";
+
+        return $this;
     }
 
     public function listarProductos(): void{
@@ -83,6 +106,10 @@ class Videoclub {
         echo "<strong>Listado de " . $this->numSocios . " socios del videoclub:</strong><br>";
         foreach ($this->socios as $socio){
             $socio->muestraResumen();
+            echo " | <a href='formUpdateCliente.php?num=" . $socio->getNumero() . "'>Editar</a>";
+            echo " | <a href='removeCliente.php?num=" . $socio->getNumero() .
+                 "' onclick='return confirm(\"¿Estás seguro de que quieres eliminar al socio " .
+                    $socio->nombre . "?\");'>Borrar</a>";
             echo "<br>";
         }
     }

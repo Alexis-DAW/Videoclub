@@ -18,9 +18,15 @@ class Cliente {
     private string $user;
     private string $pass;
 
-    public function __construct(string $nombre, int $maxAlquilerConcurrente=3, string $user, string $pass){
+    public function __construct(string $nombre, int $maxAlquilerConcurrente=3, string $user, string $pass, int $numero = 0){
         $this->nombre = $nombre;
-        $this->numero = self::$contador++;
+
+        if ($numero < 0) {
+            $this->numero = $numero;
+        } else {
+            $this->numero = self::$contador++;
+        }
+
         $this->maxAlquilerConcurrente = $maxAlquilerConcurrente;
         $this->numSoportesAlquilados = 0;
         $this->soportesAlquilados = [];
@@ -28,6 +34,9 @@ class Cliente {
         $this->pass = $pass;
     }
 
+    public static function setContador(int $nuevoValor): void {
+        self::$contador = $nuevoValor;
+    }
     public function getSoportesAlquilados(): array {
         return $this->soportesAlquilados;
     }
