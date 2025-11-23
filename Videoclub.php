@@ -34,6 +34,11 @@ class Videoclub {
         $this->numTotalAlquileres = 0;
     }
 
+    public function getNombre(): string{
+        return $this->nombre;
+    }
+
+
     public function getNumTotalAlquileres(): int {
         return $this->numTotalAlquileres;
     }
@@ -45,7 +50,7 @@ class Videoclub {
     private function incluirProducto(Soporte $producto): void {
         $this->productos[] = $producto;
         $this->numProductos++;
-        echo "Incluido soporte " . $this->numProductos . "<br>";
+//        echo "Incluido soporte " . $this->numProductos . "<br>";
     }
     public function incluirCintaVideo($titulo, $precio, $duracion): void {
         $this->incluirProducto(new CintaVideo($titulo, $precio, $duracion));
@@ -60,18 +65,19 @@ class Videoclub {
     public function incluirSocio($nombre, $maxAlquileresConcurrentes = 3): void {
         $this->socios[] = new Cliente($nombre, $maxAlquileresConcurrentes);
         $this->numSocios++;
-        echo "Incluido socio " . $this->numSocios . "<br>";
+//        echo "Incluido socio " . $this->numSocios . "<br>";
     }
 
     public function listarProductos(): void{
-        echo "<br>Listado de los " . count($this->productos) . " productos disponibles:";
+        echo "<strong>Listado de los " . count($this->productos) . " productos disponibles:</strong>";
         foreach ($this->productos as $producto) {
             echo "<br>" . $producto->getNumero() . ".- ";
             $producto->muestraResumen();
+            echo "<br>";
         }
     }
     public function listarSocios(): void{
-        echo "<br><br>Listado de " . $this->numSocios . " socios del videoclub:<br>";
+        echo "<strong>Listado de " . $this->numSocios . " socios del videoclub:</strong><br>";
         foreach ($this->socios as $socio){
             $socio->muestraResumen();
             echo "<br>";

@@ -61,8 +61,8 @@ class Cliente {
 
         $s->alquilado = true;
 
-        echo "<p><strong>Alquilado soporte a:</strong> $this->nombre</p>";
-        $s->muestraResumen();
+//        echo "<p><strong>Alquilado soporte a:</strong> $this->nombre</p>";
+//        $s->muestraResumen();
         return $this;
     }
 
