@@ -13,7 +13,7 @@ if (!isset($_SESSION["videoclub"]) || !isset($_SESSION["nombreUsuario"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>main</title>
+    <title>mainAdmin</title>
 </head>
 <body>
     <h1>¡Bienvenido, <?= $_SESSION["nombreUsuario"] ?? "" ?>! 🎬

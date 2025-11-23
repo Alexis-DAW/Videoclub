@@ -34,10 +34,13 @@ class Videoclub {
         $this->numTotalAlquileres = 0;
     }
 
+    public function getSocios(): array{
+        return $this->socios;
+    }
+
     public function getNombre(): string{
         return $this->nombre;
     }
-
 
     public function getNumTotalAlquileres(): int {
         return $this->numTotalAlquileres;
@@ -62,8 +65,8 @@ class Videoclub {
         $this->incluirProducto(new Juego($titulo, $precio, $consola, $minJ, $maxJ));
     }
 
-    public function incluirSocio($nombre, $maxAlquileresConcurrentes = 3): void {
-        $this->socios[] = new Cliente($nombre, $maxAlquileresConcurrentes);
+    public function incluirSocio(string $nombre, int $maxAlquileresConcurrentes = 3, string $user, string $pass): void {
+        $this->socios[] = new Cliente($nombre, $maxAlquileresConcurrentes, $user, $pass);
         $this->numSocios++;
 //        echo "Incluido socio " . $this->numSocios . "<br>";
     }

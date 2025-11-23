@@ -10,18 +10,36 @@ use DWES\Videoclub\Util\SoporteNoEncontradoException;
 class Cliente {
     private static int $contador = 1;
 
-
     public string $nombre;
     private int $numero;
     private int $maxAlquilerConcurrente;
-    private int $numSoportesAlquilados = 0;
-    private array $soportesAlquilados = [];
+    private int $numSoportesAlquilados;
+    private array $soportesAlquilados;
+    private string $user;
+    private string $pass;
 
-    public function __construct(string $nombre, int $maxAlquilerConcurrente=3){
+    public function __construct(string $nombre, int $maxAlquilerConcurrente=3, string $user, string $pass){
         $this->nombre = $nombre;
         $this->numero = self::$contador++;
         $this->maxAlquilerConcurrente = $maxAlquilerConcurrente;
+        $this->numSoportesAlquilados = 0;
+        $this->soportesAlquilados = [];
+        $this->user = $user;
+        $this->pass = $pass;
     }
+
+    public function getSoportesAlquilados(): array {
+        return $this->soportesAlquilados;
+    }
+
+    public function getUser(): string{
+        return $this->user;
+    }
+
+    public function getPass(): string{
+        return $this->pass;
+    }
+
 
     public function getNumero(): int{
         return $this->numero;
@@ -41,7 +59,8 @@ class Cliente {
 
 
     public function muestraResumen(): void{
-        echo "$this->nombre con " . count($this->soportesAlquilados) . " soportes alquilados";
+        echo "$this->nombre con " . count($this->soportesAlquilados) . " soportes alquilados. 
+        Nombre usuario: " . $this->getUser();
     }
 
     public function tieneAlquilado(Soporte $s): bool{
