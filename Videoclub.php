@@ -102,16 +102,20 @@ class Videoclub {
             echo "<br>";
         }
     }
+
     public function listarSocios(): void{
         echo "<strong>Listado de " . $this->numSocios . " socios del videoclub:</strong><br>";
+        echo "<ul>";
         foreach ($this->socios as $socio){
-            $socio->muestraResumen();
+            echo "<li>";
+            echo "<strong>" . $socio->nombre . "</strong> (User: " . $socio->getUser() . ")";
             echo " | <a href='formUpdateCliente.php?num=" . $socio->getNumero() . "'>Editar</a>";
             echo " | <a href='removeCliente.php?num=" . $socio->getNumero() .
-                 "' onclick='return confirm(\"¿Estás seguro de que quieres eliminar al socio " .
-                    $socio->nombre . "?\");'>Borrar</a>";
-            echo "<br>";
+                "' onclick='return confirm(\"¿Estás seguro de que quieres eliminar al socio " .
+                $socio->nombre . "?\");'>Borrar</a>";
+            echo "</li>";
         }
+        echo "</ul>";
     }
 
     public function alquilarSocioProducto($numeroCliente, $numeroSoporte): Videoclub{

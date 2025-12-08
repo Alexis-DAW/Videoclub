@@ -1,33 +1,44 @@
 <?php
+include_once("Videoclub.php");
+include_once("Cliente.php");
 session_start();
-$error = $_SESSION["error"] ?? "";
-unset($_SESSION["error"]);
+
+if (!isset($_SESSION["videoclub"]) || !isset($_SESSION["nombreUsuario"]) || $_SESSION["nombreUsuario"] !== 'admin') {
+    header("Location: index.php");
+    exit();
+}
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Alta de Cliente</title>
-    <style>.error{color: red;}</style>
-</head>
-<body>
-    <h1>👤 Nuevo Socio del Videoclub</h1>
-    <form action="createCliente.php" method="post">
-        <label for="nombre">Nombre Completo:</label>
-        <input type="text" id="nombre" name="nombre" required><br><br>
 
-        <label for="maxAlquiler">Máx. Alquileres Concurrentes (mín. 1):</label>
-        <input type="number" id="maxAlquiler" name="maxAlquiler" min="1" value="3" required><br><br>
 
-        <label for="user">Usuario (Login):</label>
-        <input type="text" id="user" name="user" required><br><br>
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Crear Cliente</title>
+    </head>
+    <body>
+        <h1>Dar de alta nuevo cliente</h1>
+        <?php if(isset($_GET['error'])) echo "<p style='color:red'>Error: Revisa los datos.</p>"; ?>
 
-        <label for="pass">Contraseña:</label>
-        <input type="password" id="pass" name="pass" required><br><br>
+        <form action="createCliente.php" method="POST">
+            <label>Nombre:</label><br>
+            <input type="text" name="nombre" required><br><br>
 
-        <button type="submit">Dar de Alta Socio</button>
-        <div class="error"><?= $error ?></div>
-    </form>
-    <br><a href="mainAdmin.php">Volver al Panel de Administración</a>
-</body>
+            <label>Usuario:</label><br>
+            <input type="text" name="user" required><br><br>
+
+            <label>Contraseña:</label><br>
+            <input type="password" name="password" required><br><br>
+
+            <label>Límite Alquileres:</label><br>
+            <input type="number" name="maxAlquileres" value="3" min="1"><br><br>
+
+            <label>Número de Socio:</label><br>
+            <input type="number" name="numero" required><br><br>
+
+            <input type="submit" value="Crear">
+        </form>
+        <br>
+        <a href="mainAdmin.php">Volver</a>
+    </body>
 </html>

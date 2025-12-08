@@ -2,7 +2,6 @@
 include_once("BaseDatos.php");
 include_once("Cliente.php");
 use DWES\Videoclub\Videoclub as Videoclub;
-use DWES\Videoclub\Cliente as Cliente;
 
 session_start();
 
@@ -32,9 +31,9 @@ if (array_key_exists($nombreIntroducido, $_SESSION["usuarios"])){
             $vc->incluirCintaVideo("Los cazafantasmas", 3.5, 107);
             $vc->incluirCintaVideo("El nombre de la Rosa", 1.5, 140);
 
-            $vc->incluirSocio("Amancio Ortega", 3, "amancio", "amancio", -1);
-            $vc->incluirSocio("Pablo Picasso", 2, "picasso", "picasso", -2);
-            $vc->incluirSocio("Usuario Pruebas", 3, "usuario", "usuario", -3);
+            $vc->incluirSocio("Amancio Ortega", 3, "amancio", "amancio", 1);
+            $vc->incluirSocio("Pablo Picasso", 2, "picasso", "picasso", 2);
+            $vc->incluirSocio("Usuario Pruebas", 3, "usuario", "usuario", 3);
 
             $vc->alquilarSocioProducto(1,2)->alquilarSocioProducto(1,3)
                 ->alquilarSocioProducto(1,6);
@@ -60,7 +59,6 @@ if (array_key_exists($nombreIntroducido, $_SESSION["usuarios"])){
             header("Location: mainCliente.php");
             exit();
         } else {
-            // Usuario logeado pero que no es cliente/socio.
             $_SESSION["error"] = "Error: El usuario '" . $nombreIntroducido . "' existe pero no es un socio del videoclub.";
             header("Location: index.php");
             exit();

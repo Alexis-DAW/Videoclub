@@ -7,8 +7,7 @@ if (!isset($_SESSION["videoclub"]) || !isset($_SESSION["nombreUsuario"])) {
     exit();
 }
 
-$cliente = $_SESSION["clienteActual"];
-
+$cliente = $_SESSION["clienteActual"];  // todo recogerlo en login
 ?>
 
 <!doctype html>
@@ -20,27 +19,31 @@ $cliente = $_SESSION["clienteActual"];
 </head>
 <body>
 
-    <h1>¡Bienvenido, <?= $cliente->nombre ?>! 🎬
-        Videoclub <?= $_SESSION["videoclub"]->getNombre() ?></h1>
+<h1>¡Bienvenido, <?= $cliente->nombre ?>! 🎬
+    Videoclub <?= $_SESSION["videoclub"]->getNombre() ?></h1>
 
-    <h2>Tus alquileres:</h2>
-    <?php
-    $alquileres = $cliente->getSoportesAlquilados();
+<h2>Tus alquileres:</h2>
+<?php
+$alquileres = $cliente->getSoportesAlquilados();
 
-    if (empty($alquileres)) {
-        echo "<p>No tienes soportes alquilados actualmente.</p>";
-    } else {
-        echo "<ul>";
-        foreach ($alquileres as $alquiler){
-            echo "<li>";
-            $alquiler->muestraResumen();
-            echo "</li>";
-        }
-        echo "</ul>";
+if (empty($alquileres)) {
+    echo "<p>No tienes soportes alquilados actualmente.</p>";
+} else {
+    echo "<ul>";
+    foreach ($alquileres as $alquiler){
+        echo "<li>";
+        $alquiler->muestraResumen();
+        echo "</li>";
     }
-    ?>
+    echo "</ul>";
+}
+?>
 
-    <a href="logout.php">Cerrar sesión</a>
+<br>
+<a href="formUpdateCliente.php?num=<?= $cliente->getNumero() ?>">📝 Editar mis datos</a>
+<br><br>
+
+<a href="logout.php">Cerrar sesión</a>
 
 </body>
 </html>

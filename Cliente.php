@@ -1,127 +1,114 @@
 <?php
 namespace DWES\Videoclub;
-include_once("Util\SoporteYaAlquiladoException.php");
-include_once ("Util\CupoSuperadoException.php");
-include_once ("Util\SoporteNoEncontradoException.php");
+
+include_once("Util/VideoclubException.php");
+include_once("Util/CupoSuperadoException.php");
+include_once("Util/SoporteYaAlquiladoException.php");
+include_once("Util/SoporteNoEncontradoException.php");
 
 use DWES\Videoclub\Util\CupoSuperadoException;
 use DWES\Videoclub\Util\SoporteYaAlquiladoException;
 use DWES\Videoclub\Util\SoporteNoEncontradoException;
-class Cliente {
-    private static int $contador = 1;
 
+class Cliente {
     public string $nombre;
     private int $numero;
-    private int $maxAlquilerConcurrente;
-    private int $numSoportesAlquilados;
     private array $soportesAlquilados;
-    private string $user;
-    private string $pass;
+    private int $numSoportesAlquilados;
+    private int $maxAlquilerConcurrente;
+    public string $user;
+    public string $password;
 
-    public function __construct(string $nombre, int $maxAlquilerConcurrente=3, string $user, string $pass, int $numero = 0){
+    public function __construct(string $nombre, int $maxAlquilerConcurrente = 3, string $user = "", string $password = "", int $numero = 0) {
         $this->nombre = $nombre;
-
-        if ($numero < 0) {
-            $this->numero = $numero;
-        } else {
-            $this->numero = self::$contador++;
-        }
-
         $this->maxAlquilerConcurrente = $maxAlquilerConcurrente;
-        $this->numSoportesAlquilados = 0;
-        $this->soportesAlquilados = [];
         $this->user = $user;
-        $this->pass = $pass;
+        $this->password = $password;
+
+        // todo: Si no se pasa número (o es 0), se podría generar uno aleatorio
+        $this->numero = $numero;
+
+        $this->soportesAlquilados = [];
+        $this->numSoportesAlquilados = 0;
     }
 
-    public static function setContador(int $nuevoValor): void {
-        self::$contador = $nuevoValor;
-    }
-    public function getSoportesAlquilados(): array {
-        return $this->soportesAlquilados;
-    }
-
-    public function getUser(): string{
-        return $this->user;
-    }
-
-    public function getPass(): string{
-        return $this->pass;
-    }
-
-
-    public function getNumero(): int{
+    public function getNumero(): int {
         return $this->numero;
     }
 
-    public function setNumero(int $numero): void{
-        $this->numero = $numero;
-    }
-
-    public function getNumSoportesAlquilados(): int{
+    public function getNumSoportesAlquilados(): int {
         return $this->numSoportesAlquilados;
     }
 
-    public function getMaxAlquilerConcurrente(): int{
+    public function getMaxAlquilerConcurrente(): int {
         return $this->maxAlquilerConcurrente;
     }
 
-
-    public function muestraResumen(): void{
-        echo "$this->nombre con " . count($this->soportesAlquilados) . " soportes alquilados. 
-        Nombre usuario: " . $this->getUser();
+    public function getAlquileres(): array {
+        return $this->soportesAlquilados;
     }
 
-    public function tieneAlquilado(Soporte $s): bool{
-        return in_array($s, $this->soportesAlquilados);
+    public function getSoportesAlquilados(): array {
+        return $this->getAlquileres();
     }
 
-    public function alquilar(Soporte $s): Cliente{
+    public function getUser(): string {
+        return $this->user;
+    }
+
+    public function getPassword(): string {
+        return $this->password;
+    }
+
+    public function setNombre(string $nombre): void { $this->nombre = $nombre; }
+    public function setUser(string $user): void { $this->user = $user; }
+    public function setPassword(string $password): void { $this->password = $password; }
+
+    public function muestraResumen() {
+        echo "Nombre: " . $this->nombre . " (Usuario: " . $this->user . ") | Cantidad Alquileres: " . count($this->soportesAlquilados);
+    }
+
+    public function tieneAlquilado(Soporte $s): bool {
+        foreach ($this->soportesAlquilados as $soporte) {
+            if ($soporte->getNumero() === $s->getNumero()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function alquilar(Soporte $s): Cliente {
         if ($this->tieneAlquilado($s)) {
-            throw new SoporteYaAlquiladoException("El soporte $s->titulo ya está alquilado por $this->nombre");
+            throw new SoporteYaAlquiladoException("El cliente ya tiene alquilado el soporte " . $s->titulo);
         }
         if ($this->numSoportesAlquilados >= $this->maxAlquilerConcurrente) {
-            throw new CupoSuperadoException("$this->nombre no puede alquilar más, cupo de $this->maxAlquilerConcurrente superado.");
+            throw new CupoSuperadoException("Cupo de alquileres superado.");
+        }
+        if ($s->alquilado) {
+            throw new SoporteYaAlquiladoException("El soporte ya está alquilado por otro socio.");
         }
 
         $this->soportesAlquilados[] = $s;
         $this->numSoportesAlquilados++;
-
         $s->alquilado = true;
 
-//        echo "<p><strong>Alquilado soporte a:</strong> $this->nombre</p>";
-//        $s->muestraResumen();
+        echo "<p>✅ Alquiler realizado: <strong>" . $s->titulo . "</strong> a " . $this->nombre . "</p>";
+
         return $this;
     }
 
     public function devolver(int $numSoporte): Cliente {
-        $soporteEncontrado = null;
-        foreach ($this->soportesAlquilados as $soporte) {
+        foreach ($this->soportesAlquilados as $key => $soporte) {
             if ($soporte->getNumero() === $numSoporte) {
-                $soporteEncontrado = $soporte;
-                break;
+                $soporte->alquilado = false;
+                unset($this->soportesAlquilados[$key]);
+                $this->numSoportesAlquilados--;
+
+                $this->soportesAlquilados = array_values($this->soportesAlquilados);
+                echo "<p>Soporte devuelto correctamente.</p>";
+                return $this;
             }
         }
-
-        if ($soporteEncontrado && $this->tieneAlquilado($soporteEncontrado)) {
-            $this->soportesAlquilados = array_filter($this->soportesAlquilados, fn($s) => $s->getNumero() !== $numSoporte);
-
-            $this->numSoportesAlquilados--;
-            echo "<br>Soporte número $numSoporte devuelto correctamente.";
-            return $this;
-        }
-
-        throw new SoporteNoEncontradoException("No se encontró ningún soporte con número $numSoporte alquilado 
-        por el cliente $this->nombre.");
+        throw new SoporteNoEncontradoException("El soporte no estaba alquilado por este cliente.");
     }
-
-    public function listaAlquileres(): void{
-        echo "<br><strong>El cliente tiene $this->numSoportesAlquilados soportes alquilados</strong>";
-        if($this->numSoportesAlquilados > 0){
-            foreach ($this->soportesAlquilados as $soporte){
-                $soporte->muestraResumen();
-            }
-        }
-    }
-
 }

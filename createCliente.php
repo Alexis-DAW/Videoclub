@@ -1,49 +1,40 @@
 <?php
 include_once("Videoclub.php");
 include_once("Cliente.php");
+
+use DWES\Videoclub\Videoclub;
+
 session_start();
 
-if (!isset($_SESSION["videoclub"]) || $_SESSION["nombreUsuario"] !== "admin") {
+if (!isset($_SESSION["videoclub"])) {
     header("Location: index.php");
     exit();
 }
 
-$vc = $_SESSION["videoclub"];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = $_POST["nombre"];
+    $user = $_POST["user"];
+    $pass = $_POST["password"];
+    $max = (int)$_POST["maxAlquileres"];
+    $numero = (int)$_POST["numero"];
 
-$nombre = $_POST["nombre"] ?? "";
-$maxAlquiler = $_POST["maxAlquiler"] ?? 0;
-$user = $_POST["user"] ?? "";
-$pass = $_POST["pass"] ?? "";
+    if (!empty($nombre) && !empty($user) && !empty($pass) && $numero > 0) {
+        $vc = $_SESSION["videoclub"];
 
-if (empty($nombre) || $maxAlquiler < 1 || empty($user) || empty($pass)) {
-    $_SESSION["error"] = "Todos los campos son obligatorios y el máximo de alquileres debe ser al menos 1.";
-    header("Location: formCreateCliente.php");
-    exit();
-}
+        if ($vc->buscarPorNumSocio($numero) !== null) {
+            header("Location: formCreateCliente.php?error=existe");
+            exit();
+        }
 
-$usuarioExiste = false;
-foreach ($vc->getSocios() as $cliente) {
-    if ($cliente->getUser() === $user) {
-        $usuarioExiste = true;
-        break;
+        $vc->incluirSocio($nombre, $max, $user, $pass, $numero);
+
+        $_SESSION["videoclub"] = $vc;
+
+        header("Location: mainAdmin.php");
+        exit();
+    } else {
+        header("Location: formCreateCliente.php?error=datos");
+        exit();
     }
 }
-if ($user === 'admin' || $usuarioExiste) {
-    $_SESSION["error"] = "El nombre de usuario '$user' ya está en uso. Por favor, elige otro.";
-    header("Location: formCreateCliente.php");
-    exit();
-}
-
-try {
-    $vc->incluirSocio($nombre, $maxAlquiler, $user, $pass);
-
-    $_SESSION["videoclub"] = $vc;
-    $_SESSION["error"] = "✅ Socio '$nombre' creado con éxito.";
-    header("Location: mainAdmin.php");
-    exit();
-
-} catch (\Exception $e) {
-    $_SESSION["error"] = "Error al intentar crear el socio: " . $e->getMessage();
-    header("Location: formCreateCliente.php");
-    exit();
-}
+header("Location: mainAdmin.php");
