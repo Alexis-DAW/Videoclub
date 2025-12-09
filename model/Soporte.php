@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace DWES\Videoclub;
-include_once("Resumible.php");
+include_once __DIR__ . "/Resumible.php";
 abstract class Soporte implements Resumible {
     private const IVA = 21;
     private static int $contador = 1;

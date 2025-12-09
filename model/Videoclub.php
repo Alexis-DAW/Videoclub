@@ -5,14 +5,21 @@ use DWES\Videoclub\Util\SoporteYaAlquiladoException;
 use DWES\Videoclub\Util\VideoclubException;
 use DWES\Videoclub\Util\ClienteNoEncontradoException;
 use DWES\Videoclub\Util\SoporteNoEncontradoException;
+use DWES\Videoclub\Util\CupoSuperadoException;
 
-include_once("Util\VideoclubException.php");
+include_once __DIR__ . "/Util/VideoclubException.php";
+include_once __DIR__ . "/Util/SoporteNoEncontradoException.php";
+include_once __DIR__ . "/Util/SoporteYaAlquiladoException.php";
+include_once __DIR__ . "/Util/CupoSuperadoException.php";
+include_once __DIR__ . "/Util/ClienteNoEncontradoException.php";
 
-include_once("Soporte.php");
-include_once("CintaVideo.php");
-include_once("Dvd.php");
-include_once("Juego.php");
-include_once("Cliente.php");
+include_once __DIR__ . "/Resumible.php";
+include_once __DIR__ . "/Soporte.php";
+
+include_once __DIR__ . "/CintaVideo.php";
+include_once __DIR__ . "/Dvd.php";
+include_once __DIR__ . "/Juego.php";
+include_once __DIR__ . "/Cliente.php";
 
 class Videoclub {
     private string $nombre;
@@ -109,8 +116,8 @@ class Videoclub {
         foreach ($this->socios as $socio){
             echo "<li>";
             echo "<strong>" . $socio->nombre . "</strong> (User: " . $socio->getUser() . ")";
-            echo " | <a href='formUpdateCliente.php?num=" . $socio->getNumero() . "'>Editar</a>";
-            echo " | <a href='removeCliente.php?num=" . $socio->getNumero() .
+            echo " | <a href='../view/formUpdateCliente.php?num=" . $socio->getNumero() . "'>Editar</a>";
+            echo " | <a href='../controller/removeCliente.php?num=" . $socio->getNumero() .
                 "' onclick='return confirm(\"¿Estás seguro de que quieres eliminar al socio " .
                 $socio->nombre . "?\");'>Borrar</a>";
             echo "</li>";

@@ -1,5 +1,7 @@
 <?php
 namespace DWES\Videoclub;
+include_once __DIR__ . "/Soporte.php";
+
 class Dvd extends Soporte{
     public string $idiomas;
     private string $formatoPantalla;

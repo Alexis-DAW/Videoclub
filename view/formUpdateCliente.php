@@ -1,6 +1,6 @@
 <?php
-include_once("Videoclub.php");
-include_once("Cliente.php");
+include_once("../model/Videoclub.php");
+include_once("../model/Cliente.php");
 session_start();
 
 if (!isset($_SESSION["videoclub"]) || !isset($_SESSION["nombreUsuario"])) {
@@ -43,7 +43,7 @@ if (!$clienteEditar) {
 <body>
 <h1>Editar datos de: <?= $clienteEditar->nombre ?></h1>
 
-<form action="updateCliente.php" method="POST">
+<form action="../controller/updateCliente.php" method="POST">
     <input type="hidden" name="numeroOriginal" value="<?= $clienteEditar->getNumero() ?>">
 
     <label>Nombre:</label><br>

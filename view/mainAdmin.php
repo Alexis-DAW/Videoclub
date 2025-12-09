@@ -1,5 +1,5 @@
 <?php
-include_once("BaseDatos.php");
+include_once("../model/BaseDatos.php");
 session_start();
 
 if (!isset($_SESSION["videoclub"]) || !isset($_SESSION["nombreUsuario"])) {
@@ -16,7 +16,7 @@ if (!isset($_SESSION["videoclub"]) || !isset($_SESSION["nombreUsuario"])) {
     <title>mainAdmin</title>
 </head>
 <body>
-    <h1>¡Bienvenido, <?= $_SESSION["nombreUsuario"] ?? "" ?>! 🎬
+    <h1>¡Bienvenido, <?= $_SESSION["nombreUsuario"] ?>! 🎬
         Videoclub <?= $_SESSION["videoclub"]->getNombre() ?></h1>
 
     <?php $_SESSION["videoclub"]->listarSocios() ?>
@@ -24,7 +24,7 @@ if (!isset($_SESSION["videoclub"]) || !isset($_SESSION["nombreUsuario"])) {
 
     <?php $_SESSION["videoclub"]->listarProductos() ?> <br>
 
-    <a href="logout.php">Cerrar sesión</a>
+    <a href="../controller/logout.php">Cerrar sesión</a>
 
 </body>
 </html>

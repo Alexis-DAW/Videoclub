@@ -1,10 +1,10 @@
 <?php
 namespace DWES\Videoclub;
 
-include_once("Util/VideoclubException.php");
-include_once("Util/CupoSuperadoException.php");
-include_once("Util/SoporteYaAlquiladoException.php");
-include_once("Util/SoporteNoEncontradoException.php");
+include_once __DIR__ . "/Util/VideoclubException.php";
+include_once __DIR__ . "/Util/SoporteNoEncontradoException.php";
+include_once __DIR__ . "/Util/SoporteYaAlquiladoException.php";
+include_once __DIR__ . "/Util/CupoSuperadoException.php";
 
 use DWES\Videoclub\Util\CupoSuperadoException;
 use DWES\Videoclub\Util\SoporteYaAlquiladoException;

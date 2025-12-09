@@ -1,13 +1,11 @@
 <?php
-include_once("Videoclub.php");
-include_once("Cliente.php");
-
-use DWES\Videoclub\Videoclub;
+include_once("../model/Videoclub.php");
+include_once("../model/Cliente.php");
 
 session_start();
 
 if (!isset($_SESSION["videoclub"])) {
-    header("Location: index.php");
+    header("Location: ../view/index.php");
     exit();
 }
 
@@ -22,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $vc = $_SESSION["videoclub"];
 
         if ($vc->buscarPorNumSocio($numero) !== null) {
-            header("Location: formCreateCliente.php?error=existe");
+            header("Location: ../view/formCreateCliente.php?error=existe");
             exit();
         }
 
@@ -30,11 +28,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $_SESSION["videoclub"] = $vc;
 
-        header("Location: mainAdmin.php");
+        header("Location: ../view/mainAdmin.php");
         exit();
     } else {
-        header("Location: formCreateCliente.php?error=datos");
+        header("Location: ../view/formCreateCliente.php?error=datos");
         exit();
     }
 }
-header("Location: mainAdmin.php");
+header("Location: ../view/mainAdmin.php");

@@ -1,6 +1,5 @@
 <?php
-include_once("BaseDatos.php");
-include_once("Cliente.php");
+include_once("../model/BaseDatos.php");
 use DWES\Videoclub\Videoclub as Videoclub;
 
 session_start();
@@ -51,27 +50,27 @@ if (array_key_exists($nombreIntroducido, $_SESSION["usuarios"])){
         }
 
         if ($nombreIntroducido === "admin"){
-            header("Location: mainAdmin.php");
+            header("Location: ../view/mainAdmin.php");
             exit();
 
         } else if ($clienteEncontrado) {
             $_SESSION["clienteActual"] = $clienteEncontrado;
-            header("Location: mainCliente.php");
+            header("Location: ../view/mainCliente.php");
             exit();
         } else {
             $_SESSION["error"] = "Error: El usuario '" . $nombreIntroducido . "' existe pero no es un socio del videoclub.";
-            header("Location: index.php");
+            header("Location: ../view/index.php");
             exit();
         }
 
     } else {
         $_SESSION["error"] = "Nombre o contraseña incorrectas";
-        header("Location: index.php");
+        header("Location: ../view/index.php");
         exit();
     }
 
 } else {
     $_SESSION["error"] = "Nombre o contraseña incorrectas";
-    header("Location: index.php");
+    header("Location: ../view/index.php");
     exit();
 }

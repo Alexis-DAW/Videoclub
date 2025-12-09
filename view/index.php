@@ -24,7 +24,7 @@ if (isset($_SESSION["error"])){
 </head>
 <body>
 
-    <form action="login.php" method="post">
+    <form action="../controller/login.php" method="post">
         <fieldset>
             <legend>Inicio de sesión</legend>
             <label for="user">Usuario:</label>

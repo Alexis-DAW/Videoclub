@@ -1,6 +1,6 @@
 <?php
-include_once("Videoclub.php");
-include_once("Cliente.php");
+include_once("../model/Videoclub.php");
+include_once("../model/Cliente.php");
 session_start();
 
 if (!isset($_SESSION["videoclub"]) || !isset($_SESSION["nombreUsuario"]) || $_SESSION["nombreUsuario"] !== 'admin') {
@@ -20,7 +20,7 @@ if (!isset($_SESSION["videoclub"]) || !isset($_SESSION["nombreUsuario"]) || $_SE
         <h1>Dar de alta nuevo cliente</h1>
         <?php if(isset($_GET['error'])) echo "<p style='color:red'>Error: Revisa los datos.</p>"; ?>
 
-        <form action="createCliente.php" method="POST">
+        <form action="../controller/createCliente.php" method="POST">
             <label>Nombre:</label><br>
             <input type="text" name="nombre" required><br><br>
 

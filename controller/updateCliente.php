@@ -1,6 +1,6 @@
 <?php
-include_once("Videoclub.php");
-include_once("Cliente.php");
+include_once("../model/Videoclub.php");
+include_once("../model/Cliente.php");
 
 session_start();
 
@@ -27,10 +27,10 @@ if (isset($_SESSION["videoclub"])) {
         $_SESSION["videoclub"] = $vc;
 
         if ($esAdmin) {
-            header("Location: mainAdmin.php");
+            header("Location: ../view/mainAdmin.php");
         } else {
             $_SESSION["clienteActual"] = $cliente;
-            header("Location: mainCliente.php");
+            header("Location: ../view/mainCliente.php");
         }
         exit();
     } else {

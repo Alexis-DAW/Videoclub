@@ -1,10 +1,10 @@
 <?php
-include_once("Videoclub.php");
-include_once("Cliente.php");
+include_once("../model/Videoclub.php");
+include_once("../model/Cliente.php");
 session_start();
 
 if (!isset($_SESSION["videoclub"])) {
-    header("Location: index.php");
+    header("Location: ../view/index.php");
     exit();
 }
 
@@ -23,4 +23,4 @@ if ($numSocio > 0){
     echo "<p style='color:red;'>⛔ ERROR: Número de socio no especificado o inválido.</p>";
 }
 
-echo ('<a href="mainAdmin.php">Volver al panel de administración</a>');
+echo ('<a href="../view/mainAdmin.php">Volver al panel de administración</a>');

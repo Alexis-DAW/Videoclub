@@ -1,5 +1,7 @@
 <?php
 namespace DWES\Videoclub;
+include_once __DIR__ . "/Soporte.php";
+
 class Juego extends Soporte {
 
     public string $consola;

@@ -1,5 +1,5 @@
 <?php
-include_once("BaseDatos.php");
+include_once("../model/BaseDatos.php");
 session_start();
 
 if (!isset($_SESSION["videoclub"]) || !isset($_SESSION["nombreUsuario"])) {
@@ -7,7 +7,7 @@ if (!isset($_SESSION["videoclub"]) || !isset($_SESSION["nombreUsuario"])) {
     exit();
 }
 
-$cliente = $_SESSION["clienteActual"];  // todo recogerlo en login
+$cliente = $_SESSION["clienteActual"];
 ?>
 
 <!doctype html>
@@ -43,7 +43,7 @@ if (empty($alquileres)) {
 <a href="formUpdateCliente.php?num=<?= $cliente->getNumero() ?>">📝 Editar mis datos</a>
 <br><br>
 
-<a href="logout.php">Cerrar sesión</a>
+<a href="../controller/logout.php">Cerrar sesión</a>
 
 </body>
 </html>

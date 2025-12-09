@@ -1,6 +1,6 @@
 <?php
 namespace DWES\Videoclub;
-include_once "Soporte.php";
+include_once __DIR__ . "/Soporte.php";
 
 class CintaVideo extends Soporte
 {
